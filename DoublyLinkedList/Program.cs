@@ -8,28 +8,56 @@ namespace DoublyLinkedList
     {
         static void Main(string[] args)
         {
-            var list = new DoublyLinkedList<Minion>();
+            Minion minion1 = new Minion("Bob", 21);
+            Minion minion2 = new Minion("Tom", 18);
+            Minion minion3 = new Minion("Tim", 19);
             
-            list.AddLast(new Minion("Bob",15));
-            list.AddFirst(new Minion("Stuart", 12));
-            list.AddFirst(new Minion("Kevin", 19));
-            list.AddLast(new Minion("Aboba", 11));
-            list.AddFirst(new Minion("Bill", 23));
-          
+           var list = new DoublyLinkedList<Minion>()
+           {
+               minion1,
+               minion2
+           };
+           
+           list.AddFirst(minion3); 
+           list.AddFirst(minion2); 
+           list.AddFirst(new Minion("Kevin", 19));
+           
+           
+           Console.WriteLine(list[0].CompareTo(list[2]));
+           Console.WriteLine(list[1].CompareTo(list[3]));
+           Console.WriteLine(list[4].CompareTo(list[0]));
+           Console.WriteLine("");
+           
+           foreach (var item in list)
+           { 
+               Console.WriteLine(item);
+               
+           }
+           
+           Console.WriteLine("");
+           
+           var minion = new Stack<string>(); 
+           minion.Push("minion"); 
+           minion.Push("I am"); 
+           minion.Push("Hi,");
+           
+           LetsIterate(minion); 
+           minion.Pop(); 
+           Console.WriteLine();
+           
+           LetsIterate(minion);
+        }
+        static void LetsIterate<T>(Stack<T> stack)
+        {
+            foreach (var element in stack)
+            {
+                Print(element);
+            }
+        }
 
-            for (int i=0; i < list.size; i++)
-            {
-                Console.WriteLine(list[i]);
-            }
-            
-            Console.WriteLine(" ");
-            list.Delete(3);
-            list.Edit( 1, new Minion("Phil", 23));
-           // list.AddFirst(new Minion("Tom", 20));
-            for (int i=0; i < list.size; i++)
-            {
-                Console.WriteLine(list[i]);
-            }
+        static void Print<T>(T element)
+        {
+            Console.Write(element+" ");
         }
         
     }

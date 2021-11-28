@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DoublyLinkedList
 {
-    public class DoublyLinkedList<T> 
+    public class DoublyLinkedList<T> : IEnumerable<T>
     {
         public Node<T> head { get; set; }
         public Node<T> tail { get; set; }
@@ -16,6 +16,23 @@ namespace DoublyLinkedList
             this.head = null;
             this.tail = null;
             this.size = 0;
+        }
+        public void Add(T value)
+        {
+            Node<T> node = new Node<T>(value);
+            if (size == 0)
+            {
+                head = node;
+                tail = node;
+            }
+            else
+            {
+                tail.Next = node;
+                node.Previous = tail;
+                tail = node;
+            }
+
+            size++;
         }
 
         public void AddFirst(T data)
@@ -147,6 +164,7 @@ namespace DoublyLinkedList
 
             throw new InvalidOperationException();
         }
+        //индексатор
         public T this[int index]
         {
             get
@@ -164,6 +182,31 @@ namespace DoublyLinkedList
                 Set(index, value);
             }
         }
+
         
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable)this).GetEnumerator();
+        }
+ 
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            Node<T> current = head;
+            while (current != null)
+            {
+                yield return current.data;
+                current = current.Next;
+            }
+        }
+ 
+        public IEnumerable<T> BackEnumerator()
+        {
+            Node<T> current = tail;
+            while (current != null)
+            {
+                yield return current.data;
+                current = current.Previous;
+            }
+        }
     }
 }
